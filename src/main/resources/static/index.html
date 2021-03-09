@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="no">
 <head>
     <meta charset="UTF-8">
     <title>Motorvogn</title>
@@ -10,23 +10,23 @@
 <body>
 <div class="container-fluid">
     <div class="row">
-        <div class="col-sm-4">
+        <div class="col-md-4">
             <form id="form">
                 <div class="form-group">
-                    <label for="personnummer">Eiers personnummer:</label>
-                    <input required class="form-control" id="personnummer" type="number">
+                    <label class="form-label" for="personnummer">Eiers personnummer:</label>
+                    <input class="form-control" id="personnummer" type="number" required>
                 </div>
                 <div class="form-group">
                     <label for="navn">Eiers navn:</label>
-                    <input required class="form-control" id="navn" type="text">
+                    <input class="form-control" id="navn" type="text" required>
                 </div>
                 <div class="form-group">
                     <label for="adresse">Eiers adresse:</label>
-                    <input required class="form-control" id="adresse" type="text">
+                    <input class="form-control" id="adresse" type="text" required>
                 </div>
                 <div class="form-group">
                     <label for="kjennetegn">Kjennetegn:</label>
-                    <input required class="form-control" id="kjennetegn" type="text">
+                    <input class="form-control" id="kjennetegn" type="text" required>
                 </div>
                 <div class="form-group">
                     <label for="bilmerke">Bilmerke:</label>
@@ -34,12 +34,12 @@
                 </div>
                 <div class="form-group">
                     <label for="biltype">Biltype:</label>
-                    <input required class="form-control" id="biltype" type="text">
+                    <input class="form-control" id="biltype" type="text" required>
                 </div>
                 <button form="form" type="button" class="btn btn-primary" onclick="registrer()">Registrer</button>
             </form>
         </div>
-        <div class="col-sm-8">
+        <div class="col-md-8">
                 <table class="table" id="utTabell">
                     <thead>
                     <th scope="col">PersonNr</th>
@@ -54,66 +54,6 @@
         </form>
     </div>
 </div>
-<script>
-    let utTabell = document.getElementById("utTabell");
-    let antallrader = 0;
-
-    function feilhandering() {
-        let personnummer = $("#personnummer").val();
-        let navn = $("#navn").val();
-        let adresse = $("#adresse").val();
-        let kjennetegn = $("#kjennetegn").val();
-        let bilmerke = $("#bilmerke").val();
-        let biltype = $("#biltype").val();
-
-    }
-
-    function registrer() {
-        feilhandering();
-        let personnummer = $("#personnummer").val();
-        let navn = $("#navn").val();
-        let adresse = $("#adresse").val();
-        let kjennetegn = $("#kjennetegn").val();
-        let bilmerke = $("#bilmerke").val();
-        let biltype = $("#biltype").val();
-        let motorvogn = {
-            personnummer: personnummer,
-            navn: navn,
-            adresse: adresse,
-            kjennetegn: kjennetegn,
-            bilmerke: bilmerke,
-            biltype: biltype
-        };
-        const url = "/motorvogn";
-        $.post(url, motorvogn, function (data) {
-            for (i = 1; i < antallrader + 1;) {
-                utTabell.deleteRow(i);
-                antallrader--;
-            }
-            for (i in data) {
-                let nyrad = utTabell.insertRow(1);
-                antallrader++;
-                console.log("Antall rader: " + antallrader);
-                let nycelle0 = nyrad.insertCell(0)
-                nycelle0.innerHTML = data[i].personnummer;
-
-                let nycelle1 = nyrad.insertCell(1);
-                nycelle1.innerHTML = data[i].navn;
-
-                let nycelle2 = nyrad.insertCell(2);
-                nycelle2.innerHTML = data[i].adresse;
-
-                let nycelle3 = nyrad.insertCell(3);
-                nycelle3.innerHTML = data[i].kjennetegn;
-
-                let nycelle4 = nyrad.insertCell(4);
-                nycelle4.innerHTML = data[i].bilmerke;
-
-                let nycelle5 = nyrad.insertCell(5);
-                nycelle5.innerHTML = data[i].biltype;
-            }
-        });
-    }
-</script>
+<script src="index.js"></script>
 </body>
 </html>
