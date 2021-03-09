@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Motorvogn</title>
+    <script src="jQuery.js"></script>
+    <script src="bootstrap-3.4.1-dist/js/bootstrap.js"></script>
+    <link rel="stylesheet" href="bootstrap-3.4.1-dist/css/bootstrap.css">
+</head>
+<body>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-sm-4">
+            <form id="form">
+                <div class="form-group">
+                    <label for="personnummer">Eiers personnummer:</label>
+                    <input required class="form-control" id="personnummer" type="number">
+                </div>
+                <div class="form-group">
+                    <label for="navn">Eiers navn:</label>
+                    <input required class="form-control" id="navn" type="text">
+                </div>
+                <div class="form-group">
+                    <label for="adresse">Eiers adresse:</label>
+                    <input required class="form-control" id="adresse" type="text">
+                </div>
+                <div class="form-group">
+                    <label for="kjennetegn">Kjennetegn:</label>
+                    <input required class="form-control" id="kjennetegn" type="text">
+                </div>
+                <div class="form-group">
+                    <label for="bilmerke">Bilmerke:</label>
+                    <input class="form-control" id="bilmerke" type="text" required>
+                </div>
+                <div class="form-group">
+                    <label for="biltype">Biltype:</label>
+                    <input required class="form-control" id="biltype" type="text">
+                </div>
+                <button form="form" type="button" class="btn btn-primary" onclick="registrer()">Registrer</button>
+            </form>
+        </div>
+        <div class="col-sm-8">
+                <table class="table" id="utTabell">
+                    <thead>
+                    <th scope="col">PersonNr</th>
+                    <th scope="col">Navn</th>
+                    <th scope="col">Adresse</th>
+                    <th scope="col">Kjennetegn</th>
+                    <th scope="col">Merke</th>
+                    <th scope="col">Type</th>
+                    </thead>
+                </table>
+            </div>
+        </form>
+    </div>
+</div>
+<script>
+    let utTabell = document.getElementById("utTabell");
+    let antallrader = 0;
+
+    function feilhandering() {
+        let personnummer = $("#personnummer").val();
+        let navn = $("#navn").val();
+        let adresse = $("#adresse").val();
+        let kjennetegn = $("#kjennetegn").val();
+        let bilmerke = $("#bilmerke").val();
+        let biltype = $("#biltype").val();
+
+    }
+
+    function registrer() {
+        feilhandering();
+        let personnummer = $("#personnummer").val();
+        let navn = $("#navn").val();
+        let adresse = $("#adresse").val();
+        let kjennetegn = $("#kjennetegn").val();
+        let bilmerke = $("#bilmerke").val();
+        let biltype = $("#biltype").val();
+        let motorvogn = {
+            personnummer: personnummer,
+            navn: navn,
+            adresse: adresse,
+            kjennetegn: kjennetegn,
+            bilmerke: bilmerke,
+            biltype: biltype
+        };
+        const url = "/motorvogn";
+        $.post(url, motorvogn, function (data) {
+            for (i = 1; i < antallrader + 1;) {
+                utTabell.deleteRow(i);
+                antallrader--;
+            }
+            for (i in data) {
+                let nyrad = utTabell.insertRow(1);
+                antallrader++;
+                console.log("Antall rader: " + antallrader);
+                let nycelle0 = nyrad.insertCell(0)
+                nycelle0.innerHTML = data[i].personnummer;
+
+                let nycelle1 = nyrad.insertCell(1);
+                nycelle1.innerHTML = data[i].navn;
+
+                let nycelle2 = nyrad.insertCell(2);
+                nycelle2.innerHTML = data[i].adresse;
+
+                let nycelle3 = nyrad.insertCell(3);
+                nycelle3.innerHTML = data[i].kjennetegn;
+
+                let nycelle4 = nyrad.insertCell(4);
+                nycelle4.innerHTML = data[i].bilmerke;
+
+                let nycelle5 = nyrad.insertCell(5);
+                nycelle5.innerHTML = data[i].biltype;
+            }
+        });
+    }
+</script>
+</body>
+</html>
