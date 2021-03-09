@@ -36,7 +36,7 @@
                     <label for="biltype">Biltype:</label>
                     <input class="form-control" id="biltype" type="text" required>
                 </div>
-                <button form="form" type="button" class="btn btn-primary" onclick="registrer()">Registrer</button>
+                <button form="form" type="submit" class="btn btn-primary" onclick="registrer()">Registrer</button>
             </form>
         </div>
         <div class="col-md-8">
@@ -51,8 +51,8 @@
                     </thead>
                 </table>
             </div>
-        </form>
-    </div>
+        <button type="button" class="btn btn-danger" onclick="slettRader()">Slett alle rader</button>
+        </div>
 </div>
 <script src="index.js"></script>
 </body>

@@ -9,10 +9,17 @@ function feilhandering() {
     let kjennetegn = $("#kjennetegn").val();
     let bilmerke = $("#bilmerke").val();
     let biltype = $("#biltype").val();
+
+    if(navn === "" || adresse === "" || kjennetegn === "" || bilmerke === "" || biltype === ""){
+        return "feil";
+    }
 }
 
 function registrer() {
     feilhandering();
+    if(feilhandering() === "feil"){
+        return;
+    }
     personnummer = $("#personnummer").val();
 
     let navn = $("#navn").val();
