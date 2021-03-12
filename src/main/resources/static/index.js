@@ -1,32 +1,22 @@
 let utTabell = document.getElementById("utTabell");
 let antallrader = 0;
 let personnummer;
+let navn;
+let adresse;
+let kjennetegn;
+let bilmerke;
+let biltype;
 
-function feilhandering() {
-    personnummer = $("#personnummer").val();
-    let navn = $("#navn").val();
-    let adresse = $("#adresse").val();
-    let kjennetegn = $("#kjennetegn").val();
-    let bilmerke = $("#bilmerke").val();
-    let biltype = $("#biltype").val();
 
-    if(navn === "" || adresse === "" || kjennetegn === "" || bilmerke === "" || biltype === ""){
-        return "feil";
-    }
-}
 
 function registrer() {
-    feilhandering();
-    if(feilhandering() === "feil"){
-        return;
-    }
+    //feilhandering();
     personnummer = $("#personnummer").val();
-
-    let navn = $("#navn").val();
-    let adresse = $("#adresse").val();
-    let kjennetegn = $("#kjennetegn").val();
-    let bilmerke = $("#bilmerke").val();
-    let biltype = $("#biltype").val();
+    navn = $("#navn").val();
+    adresse = $("#adresse").val();
+    kjennetegn = $("#kjennetegn").val();
+    bilmerke = $("#bilmerke").val();
+    biltype = $("#biltype").val();
     let motorvogn = {
         personnummer: personnummer,
         navn: navn,
@@ -36,7 +26,8 @@ function registrer() {
         biltype: biltype
     };
     const url = "/motorvogn";
-    $.post(url, motorvogn, function (data) {
+    $.post(url, motorvogn, function(data){
+        console.log(data)
         for (i = 1; i < antallrader + 1;) {
             utTabell.deleteRow(i);
             antallrader--;
