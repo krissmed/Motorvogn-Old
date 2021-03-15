@@ -80,8 +80,11 @@ function registrer() {
         }
     }
     function slettRader(){
+    const url = "/slett"
+    $.get(url, function(){
         for (i = 1; i < antallrader + 1;) {
             utTabell.deleteRow(i);
             antallrader--;
         }
+    });
     }

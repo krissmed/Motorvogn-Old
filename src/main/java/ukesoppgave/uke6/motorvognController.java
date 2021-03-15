@@ -16,7 +16,11 @@ public class motorvognController {
         return motorvogner;
     }
     @GetMapping("/hentTabell")
-    public ArrayList<Motorvogn> motorvogn(){
+    public ArrayList<Motorvogn> hentArray(){
         return motorvogner;
+    }
+    @GetMapping("/slett")
+    public void slettArray(){
+        motorvogner.clear();
     }
 }
