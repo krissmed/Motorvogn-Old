@@ -1,3 +1,9 @@
+$(document).ready(function() {
+    const url = "/hentTabell";
+    $.get(url, function (data) {
+        SkrivUtData(data);
+    });
+});
 let utTabell = document.getElementById("utTabell");
 let antallrader = 0;
 let personnummer;
@@ -6,17 +12,30 @@ let adresse;
 let kjennetegn;
 let bilmerke;
 let biltype;
-
-
+function feilhandtering(){
+    console.log(personnummer, navn, adresse, kjennetegn);
+    if(personnummer === ""){return false}
+    else if(navn === ""){return false}
+    else if(adresse === ""){return false}
+    else if(kjennetegn === ""){return false}
+    else if(bilmerke === ""){return false}
+    else if(biltype === ""){return false}
+    else{
+        return true;
+    }
+}
 
 function registrer() {
-    //feilhandering();
     personnummer = $("#personnummer").val();
     navn = $("#navn").val();
     adresse = $("#adresse").val();
     kjennetegn = $("#kjennetegn").val();
     bilmerke = $("#bilmerke").val();
     biltype = $("#biltype").val();
+    console.log(personnummer, navn, adresse, kjennetegn);
+    if(feilhandtering() == false){
+        return;
+    }
     let motorvogn = {
         personnummer: personnummer,
         navn: navn,
@@ -26,7 +45,12 @@ function registrer() {
         biltype: biltype
     };
     const url = "/motorvogn";
-    $.post(url, motorvogn, function(data){
+    $.post(url, motorvogn, function (data) {
+        SkrivUtData(data)
+    });
+}
+
+    function SkrivUtData(data) {
         console.log(data)
         for (i = 1; i < antallrader + 1;) {
             utTabell.deleteRow(i);
@@ -54,5 +78,10 @@ function registrer() {
             let nycelle5 = nyrad.insertCell(5);
             nycelle5.innerHTML = data[i].biltype;
         }
-    });
-}
+    }
+    function slettRader(){
+        for (i = 1; i < antallrader + 1;) {
+            utTabell.deleteRow(i);
+            antallrader--;
+        }
+    }
