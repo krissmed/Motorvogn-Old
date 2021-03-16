@@ -10,16 +10,18 @@ import java.util.ArrayList;
 @RestController
 public class motorvognController {
     public static ArrayList<Motorvogn> motorvogner = new ArrayList<>();
-
+    //Legg til en ny bil i motorvogn
     @PostMapping("/motorvogn")
     public ArrayList<Motorvogn> motorvogn(Motorvogn bil){
         motorvogner.add(bil);
         return motorvogner;
     }
+    //Skriver ut tabellen til index.html
     @GetMapping("/hentTabell")
     public ArrayList<Motorvogn> hentArray(){
         return motorvogner;
     }
+    //Slett innhold i motorvogner
     @GetMapping("/slett")
     public void slettArray(){
         motorvogner.clear();
