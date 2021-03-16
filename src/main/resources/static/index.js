@@ -1,4 +1,5 @@
-$(document).ready(function() {
+// SKriver ut tabellen med en gang siden lastes inn
+$(document).ready(function () {
     const url = "/hentTabell";
     $.get(url, function (data) {
         SkrivUtData(data);
@@ -12,19 +13,28 @@ let adresse;
 let kjennetegn;
 let bilmerke;
 let biltype;
-function feilhandtering(){
+
+//Feilhånterer ved å sjekke at alle felt er fylt inn
+function feilhandtering() {
     console.log(personnummer, navn, adresse, kjennetegn);
-    if(personnummer === ""){return false}
-    else if(navn === ""){return false}
-    else if(adresse === ""){return false}
-    else if(kjennetegn === ""){return false}
-    else if(bilmerke === ""){return false}
-    else if(biltype === ""){return false}
-    else{
+    if (personnummer === "") {
+        return false
+    } else if (navn === "") {
+        return false
+    } else if (adresse === "") {
+        return false
+    } else if (kjennetegn === "") {
+        return false
+    } else if (bilmerke === "") {
+        return false
+    } else if (biltype === "") {
+        return false
+    } else {
         return true;
     }
 }
 
+//Registrerer data for å legge inn på server
 function registrer() {
     personnummer = $("#personnummer").val();
     navn = $("#navn").val();
@@ -33,7 +43,7 @@ function registrer() {
     bilmerke = $("#bilmerke").val();
     biltype = $("#biltype").val();
     console.log(personnummer, navn, adresse, kjennetegn);
-    if(feilhandtering() == false){
+    if (feilhandtering() == false) {
         return;
     }
     let motorvogn = {
@@ -50,41 +60,44 @@ function registrer() {
     });
 }
 
-    function SkrivUtData(data) {
-        console.log(data)
-        for (i = 1; i < antallrader + 1;) {
-            utTabell.deleteRow(i);
-            antallrader--;
-        }
-        for (i in data) {
-            let nyrad = utTabell.insertRow(1);
-            antallrader++;
-            console.log("Antall rader: " + antallrader);
-            let nycelle0 = nyrad.insertCell(0)
-            nycelle0.innerHTML = data[i].personnummer;
-
-            let nycelle1 = nyrad.insertCell(1);
-            nycelle1.innerHTML = data[i].navn;
-
-            let nycelle2 = nyrad.insertCell(2);
-            nycelle2.innerHTML = data[i].adresse;
-
-            let nycelle3 = nyrad.insertCell(3);
-            nycelle3.innerHTML = data[i].kjennetegn;
-
-            let nycelle4 = nyrad.insertCell(4);
-            nycelle4.innerHTML = data[i].bilmerke;
-
-            let nycelle5 = nyrad.insertCell(5);
-            nycelle5.innerHTML = data[i].biltype;
-        }
+// Funksjon for å skirve ut data til tabellen
+function SkrivUtData(data) {
+    // Sletter rader som er skrevet ut
+    for (i = 1; i < antallrader + 1;) {
+        utTabell.deleteRow(i);
+        antallrader--;
     }
-    function slettRader(){
+    //SKriver ut data som blir registrert
+    for (i in data) {
+        let nyrad = utTabell.insertRow(1);
+        antallrader++; //Teller opp antall rader som skrevet ut
+        console.log("Antall rader: " + antallrader);
+        let nycelle0 = nyrad.insertCell(0)
+        nycelle0.innerHTML = data[i].personnummer;
+
+        let nycelle1 = nyrad.insertCell(1);
+        nycelle1.innerHTML = data[i].navn;
+
+        let nycelle2 = nyrad.insertCell(2);
+        nycelle2.innerHTML = data[i].adresse;
+
+        let nycelle3 = nyrad.insertCell(3);
+        nycelle3.innerHTML = data[i].kjennetegn;
+
+        let nycelle4 = nyrad.insertCell(4);
+        nycelle4.innerHTML = data[i].bilmerke;
+
+        let nycelle5 = nyrad.insertCell(5);
+        nycelle5.innerHTML = data[i].biltype;
+    }
+}
+// Slett all info registrert på server
+function slettRader() {
     const url = "/slett"
-    $.get(url, function(){
+    $.get(url, function () {
         for (i = 1; i < antallrader + 1;) {
             utTabell.deleteRow(i);
             antallrader--;
         }
     });
-    }
+}
