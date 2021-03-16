@@ -1,4 +1,4 @@
-package ukesoppgave.uke6;
+package ukesoppgave.uke6.modeller;
 
 public class Motorvogn {
     String personnummer;
