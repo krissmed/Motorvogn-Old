@@ -1,2 +1,2 @@
 # Motorvogn
-Et eneklt program som lagrer data om kjøretøy som lagres på server
+Et enkelt program som lagrer data om kjøretøy som lagres på server
