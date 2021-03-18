@@ -1,10 +1,12 @@
-// SKriver ut tabellen med en gang siden lastes inn
+// SKriver ut tabellen og henter bilregister med en gang siden lastes inn
 $(document).ready(function () {
     const url = "/hentTabell";
     $.get(url, function (data) {
         SkrivUtData(data);
     });
+    hentAlleBiler();
 });
+
 let utTabell = document.getElementById("utTabell");
 let antallrader = 0;
 let personnummer;
@@ -14,9 +16,48 @@ let kjennetegn;
 let bilmerke;
 let biltype;
 
-//Feilhånterer ved å sjekke at alle felt er fylt inn
+// Henter alle biler fra bilregister fra server
+function hentAlleBiler(){
+    $.get("/hentBiler", function(biler){
+       formaterBiler(biler);
+    });
+}
+//Gjør om formaterBiler og formaterTyper til å bruker .add().
+function formaterBiler(biler){
+    let ut = "<select id='valgtMerke' onchange='finnTyper()'>"
+    let forrigeMerke = "";
+    ut += "<option disabled selected>Velg merke</option>"
+    for(const bil of biler){
+        if(bil.merke != forrigeMerke){
+            ut+= "<option>"+bil.merke+"</option>"
+        }
+        forrigeMerke = bil.merke;
+    }
+
+    ut+= "</select>";
+    $("#merke").html(ut);
+}
+
+function finnTyper(){
+    const valgtMerke = $("#valgtMerke").val();
+    $.get("/hentBiler", function(biler){
+       formaterTyper(biler, valgtMerke)
+    });
+}
+
+function formaterTyper(biler, valgtMerke){
+    let ut = "<select id='valgtType'>";
+        for(const bil of biler){
+        if(bil.merke === valgtMerke){
+            ut+= "<option>"+bil.type+"</option>"
+        }
+    }
+    ut+="</select>"
+    $("#type").html(ut);
+}
+
+//Feilhåndterer ved å sjekke at alle felt er fylt inn
 function feilhandtering() {
-    console.log(personnummer, navn, adresse, kjennetegn);
     if (personnummer === "") {
         return false
     } else if (navn === "") {
@@ -40,9 +81,8 @@ function registrer() {
     navn = $("#navn").val();
     adresse = $("#adresse").val();
     kjennetegn = $("#kjennetegn").val();
-    bilmerke = $("#bilmerke").val();
-    biltype = $("#biltype").val();
-    console.log(personnummer, navn, adresse, kjennetegn);
+    bilmerke = $("#valgtMerke").val();
+    biltype = $("#valgtType").val();
     if (feilhandtering() == false) {
         return;
     }
@@ -60,18 +100,17 @@ function registrer() {
     });
 }
 
-// Funksjon for å skirve ut data til tabellen
+// Funksjon for å skrive ut data til tabellen
 function SkrivUtData(data) {
     // Sletter rader som er skrevet ut
     for (i = 1; i < antallrader + 1;) {
         utTabell.deleteRow(i);
         antallrader--;
     }
-    //SKriver ut data som blir registrert
+    //Skriver ut data som blir registrert
     for (i in data) {
         let nyrad = utTabell.insertRow(1);
         antallrader++; //Teller opp antall rader som skrevet ut
-        console.log("Antall rader: " + antallrader);
         let nycelle0 = nyrad.insertCell(0)
         nycelle0.innerHTML = data[i].personnummer;
 
