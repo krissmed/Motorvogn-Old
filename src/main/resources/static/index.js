@@ -25,13 +25,21 @@ function hentAlleBiler(){
 //Gjør om formaterBiler og formaterTyper til å bruker .add().
 function formaterBiler(biler){
     let ut = "<select id='valgtMerke' onchange='finnTyper()'>"
-    let forrigeMerke = "";
+    let forrigeMerke = [];
+    let finnesMerke;
     ut += "<option disabled selected>Velg merke</option>"
     for(const bil of biler){
-        if(bil.merke != forrigeMerke){
-            ut+= "<option>"+bil.merke+"</option>";
+        console.log(forrigeMerke)
+        finnesMerke = true;
+        for(i=0;i<forrigeMerke.length;i++){
+            if(bil.merke === forrigeMerke[i]){
+                finnesMerke = false;
+            }
         }
-        forrigeMerke = bil.merke;
+        if(finnesMerke){
+            ut+= "<option>"+bil.merke+"</option>";
+            forrigeMerke.push(bil.merke);
+        }
     }
 
     ut+= "</select>";

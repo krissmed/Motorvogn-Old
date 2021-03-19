@@ -18,10 +18,10 @@ public class motorvognController {
         bilRegister.add(bil1);
         Bil bil2 = new Bil("Volvo", "V70");
         bilRegister.add(bil2);
-        Bil bil3 = new Bil("Volvo", "V91");
-        bilRegister.add(bil3);
         Bil bil4 = new Bil("Audi", "V8");
         bilRegister.add(bil4);
+        Bil bil3 = new Bil("Volvo", "V91");
+        bilRegister.add(bil3);
         Bil bil5 = new Bil("Audi", "Q7");
         bilRegister.add(bil5);
         Bil bil6 = new Bil("Audi", "Q8");
