@@ -19,7 +19,7 @@ let biltype;
 // Henter alle biler fra bilregister fra server
 function hentAlleBiler(){
     $.get("/hentBiler", function(biler){
-       formaterBiler(biler);
+        formaterBiler(biler);
     });
 }
 //Gjør om formaterBiler og formaterTyper til å bruker .add().
@@ -29,7 +29,7 @@ function formaterBiler(biler){
     ut += "<option disabled selected>Velg merke</option>"
     for(const bil of biler){
         if(bil.merke != forrigeMerke){
-            ut+= "<option>"+bil.merke+"</option>"
+            ut+= "<option>"+bil.merke+"</option>";
         }
         forrigeMerke = bil.merke;
     }
@@ -41,13 +41,13 @@ function formaterBiler(biler){
 function finnTyper(){
     const valgtMerke = $("#valgtMerke").val();
     $.get("/hentBiler", function(biler){
-       formaterTyper(biler, valgtMerke)
+        formaterTyper(biler, valgtMerke)
     });
 }
 
 function formaterTyper(biler, valgtMerke){
     let ut = "<select id='valgtType'>";
-        for(const bil of biler){
+    for(const bil of biler){
         if(bil.merke === valgtMerke){
             ut+= "<option>"+bil.type+"</option>"
         }
@@ -58,7 +58,7 @@ function formaterTyper(biler, valgtMerke){
 
 //Feilhåndterer ved å sjekke at alle felt er fylt inn
 function feilhandtering() {
-    if (personnummer === "") {
+    if (personnummer === "" || personnummer < 1) {
         return false
     } else if (navn === "") {
         return false
@@ -130,7 +130,7 @@ function SkrivUtData(data) {
         nycelle5.innerHTML = data[i].biltype;
     }
 }
-// Slett all info registrert på server
+// Slett all data registrert på server
 function slettRader() {
     const url = "/slett"
     $.get(url, function () {
