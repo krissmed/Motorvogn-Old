@@ -27,6 +27,7 @@ function formaterBiler(biler){
     let ut = "<select id='valgtMerke' onchange='finnTyper()'>"
     let forrigeMerke = [];
     let finnesMerke;
+    let bilmerke = document.getElementById("merke");
     ut += "<option disabled selected>Velg merke</option>"
     for(const bil of biler){
         console.log(forrigeMerke)
@@ -37,7 +38,7 @@ function formaterBiler(biler){
             }
         }
         if(finnesMerke){
-            ut+= "<option>"+bil.merke+"</option>";
+            ut+="<option>"+bil.merke+"</option>"
             forrigeMerke.push(bil.merke);
         }
     }
